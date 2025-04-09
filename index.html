@@ -1,47 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Accessing System...</title>
-  <meta charset="UTF-8">
-  <style>
-    body {
-      background-color: black;
-      color: #00FF00;
-      font-family: monospace;
-      font-size: 18px;
-      padding: 20px;
-    }
-  </style>
-</head>
-<body>
-<pre id="terminal"></pre>
-
-<script>
-  const text = [
-    "Connecting to device...",
-    "Bypassing security...",
-    "Access granted!",
-    "Reading personal files...",
-    "Uploading to server...",
-    "succes get access!...", 
-    "Haha kena prank :)"
-  ];
-
-  let i = 0;
-  function typeLine() {
-    if (i < text.length) {
-      document.getElementById("terminal").innerHTML += text[i] + "\n";
-      i++;
-      setTimeout(typeLine, 1500);
-    }
-  }
-  typeLine();
-</script>
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
   <title>System Breach...</title>
   <meta charset="UTF-8">
   <style>

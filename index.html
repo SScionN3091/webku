@@ -1,59 +1,40 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
+  <title>Accessing System...</title>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Web Dark Mode</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Fira Code', monospace;
-      background-color: #121212;
-      color: #e0e0e0;
-      text-align: center;
-      padding: 80px 20px;
-    }
-    h1 {
-      font-size: 2.5em;
-      color: #00ffd5;
-      animation: fadeInDown 1.2s ease-out;
-    }
-    p {
-      font-size: 1.2em;
-      margin-top: 20px;
-      color: #bdbdbd;
-      animation: fadeInUp 1.5s ease-out;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 12px 25px;
-      background-color: #00ffd5;
-      color: #121212;
-      border: none;
-      border-radius: 8px;
-      font-size: 1em;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    .btn:hover {
-      background-color: #00c8aa;
-    }
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      background-color: black;
+      color: #00FF00;
+      font-family: monospace;
+      font-size: 18px;
+      padding: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to My Dark Web</h1>
-  <p>Website pertama dengan dark mode, dibuat gratis pakai GitHub Pages.</p>
-  <a class="btn" href="https://github.com/SScionN3091" target="_blank">Lihat GitHub Saya</a>
+<pre id="terminal"></pre>
+
+<script>
+  const text = [
+    "Connecting to device...",
+    "Bypassing security...",
+    "Access granted!",
+    "Reading personal files...",
+    "Uploading to server...",
+    "Haha kena prank :)"
+  ];
+
+  let i = 0;
+  function typeLine() {
+    if (i < text.length) {
+      document.getElementById("terminal").innerHTML += text[i] + "\n";
+      i++;
+      setTimeout(typeLine, 1500);
+    }
+  }
+  typeLine();
+</script>
 </body>
 </html>

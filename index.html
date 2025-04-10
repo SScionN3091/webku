@@ -11,6 +11,17 @@
       font-size: 18px;
       padding: 20px;
     }
+
+    /* Efek layar berkedip saat aktif */
+    .blink {
+      animation: blink 0.4s infinite alternate;
+    }
+
+    @keyframes blink {
+      0% { background-color: black; color: #00FF00; }
+      100% { background-color: red; color: black; }
+    }
+
     #clickToStart {
       position: absolute;
       top: 50%;
@@ -25,15 +36,28 @@
       font-size: 1em;
       display: none;
     }
+
+    #panicMessage {
+      display: none;
+      font-size: 24px;
+      font-weight: bold;
+      color: red;
+      text-align: center;
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
 <pre id="terminal"></pre>
 <button id="clickToStart">Click me</button>
+<div id="panicMessage">!! SYSTEM CORRUPTION DETECTED - FORMATTING IN 10 SECONDS !!</div>
 
 <audio id="backsound" preload="auto">
   <source src="hacker-sound.mp3" type="audio/mpeg">
-  Browser kamu tidak mendukung audio.
+</audio>
+
+<audio id="alarm">
+  <source src="https://www.soundjay.com/button/beep-07.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -53,6 +77,8 @@
 
   const startButton = document.getElementById("clickToStart");
   const sound = document.getElementById("backsound");
+  const alarm = document.getElementById("alarm");
+  const panicMessage = document.getElementById("panicMessage");
 
   function typeLine() {
     let i = 0;
@@ -61,12 +87,19 @@
         document.getElementById("terminal").innerHTML += text[i] + "\n";
         i++;
         setTimeout(loop, 1300);
+      } else {
+        triggerPanic();
       }
     }
     loop();
   }
 
-  // Browser blokir autoplay → tunggu klik
+  function triggerPanic() {
+    document.body.classList.add("blink");
+    panicMessage.style.display = "block";
+    alarm.play();
+  }
+
   startButton.style.display = 'block';
   startButton.addEventListener("click", () => {
     sound.play();

@@ -12,16 +12,6 @@
       padding: 20px;
     }
 
-    /* Efek layar berkedip saat aktif */
-    .blink {
-      animation: blink 0.4s infinite alternate;
-    }
-
-    @keyframes blink {
-      0% { background-color: black; color: #00FF00; }
-      100% { background-color: red; color: black; }
-    }
-
     #clickToStart {
       position: absolute;
       top: 50%;
@@ -34,66 +24,91 @@
       border: none;
       cursor: pointer;
       font-size: 1em;
-      display: none;
     }
 
-    #panicMessage {
-      display: none;
-      font-size: 24px;
-      font-weight: bold;
-      color: red;
-      text-align: center;
-      margin-top: 30px;
+    .blink {
+      animation: blinkAnim 0.2s infinite alternate;
+    }
+
+    @keyframes blinkAnim {
+      from { background-color: black; }
+      to { background-color: #111; }
     }
   </style>
 </head>
 <body>
-<pre id="terminal"></pre>
-<button id="clickToStart">Click me</button>
-<div id="panicMessage">!! SYSTEM CORRUPTION DETECTED - FORMATTING IN 10 SECONDS !!</div>
 
+<!-- Terminal text -->
+<pre id="terminal"></pre>
+
+<!-- Gambar hacker -->
+<img src="hacker.png" alt="Hacker" style="width: 300px; display: block; margin: 20px auto;">
+
+<!-- Tombol mulai -->
+<button id="clickToStart">Click me</button>
+
+<!-- Backsound -->
 <audio id="backsound" preload="auto">
   <source src="hacker-sound.mp3" type="audio/mpeg">
 </audio>
 
-<audio id="alarm">
-  <source src="https://www.soundjay.com/button/beep-07.mp3" type="audio/mpeg">
+<!-- Alarm panic -->
+<audio id="alarm" preload="auto">
+  <source src="alarm.mp3" type="audio/mpeg">
 </audio>
 
+<!-- Pesan Panic -->
+<div id="panicMessage" style="display:none; color:red; font-size:24px; text-align:center; margin-top:20px;">
+  SYSTEM FAILURE DETECTED!
+</div>
+
+<!-- Script -->
 <script>
   const text = [
     "Connecting to device...",
     "Bypassing firewall...",
     "Root access granted!",
     "Uploading files...", 
-    "Payload already install in device!",
-    "Copying data...",
-    ".", 
-    "..", 
-    "...", 
-    "....", 
-    "mangeak",
-    "wkwk",
-    "si wawan bi bakwan mereka memanggilku seorang pahlawan", 
+    "Success!", 
+    "wkwk", 
+    "si wawan beli bakwan mereka memanggilku seorang pahlawan", 
   ];
 
   const startButton = document.getElementById("clickToStart");
   const sound = document.getElementById("backsound");
   const alarm = document.getElementById("alarm");
   const panicMessage = document.getElementById("panicMessage");
+  const terminal = document.getElementById("terminal");
 
-  function typeLine() {
-    let i = 0;
-    function loop() {
-      if (i < text.length) {
-        document.getElementById("terminal").innerHTML += text[i] + "\n";
-        i++;
-        setTimeout(loop, 1300);
-      } else {
+  // Ketik animasi satu per satu karakter
+  function typeTextWithEffect(lines, delayBetweenLines = 1000, charDelay = 50) {
+    let currentLine = 0;
+
+    function typeLine() {
+      if (currentLine >= lines.length) {
         triggerPanic();
+        return;
       }
+
+      let line = lines[currentLine];
+      let charIndex = 0;
+
+      function typeChar() {
+        if (charIndex < line.length) {
+          terminal.innerHTML += line[charIndex];
+          charIndex++;
+          setTimeout(typeChar, charDelay);
+        } else {
+          terminal.innerHTML += '\n';
+          currentLine++;
+          setTimeout(typeLine, delayBetweenLines);
+        }
+      }
+
+      typeChar();
     }
-    loop();
+
+    typeLine();
   }
 
   function triggerPanic() {
@@ -102,11 +117,10 @@
     alarm.play();
   }
 
-  startButton.style.display = 'block';
   startButton.addEventListener("click", () => {
     sound.play();
     startButton.style.display = 'none';
-    typeLine();
+    typeTextWithEffect(text);
   });
 </script>
 </body>
